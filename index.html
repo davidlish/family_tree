@@ -44,7 +44,7 @@ header .sub{font-size:12px; color:var(--muted);}
 #results.show{display:flex;}
 #results .none{padding:10px 12px; color:var(--muted); font-size:14px; letter-spacing:1px; white-space:nowrap;}
 #results .hint{padding:10px 12px; color:var(--muted); font-size:12px; white-space:nowrap;}
-.result-item{flex:0 0 auto; display:flex; flex-direction:column; min-width:150px; max-width:260px; text-align:left; background:#fff; border:1px solid transparent; border-radius:8px; padding:8px 12px; cursor:pointer; transition:.15s;}
+.result-item{flex:0 0 auto; display:flex; flex-direction:column; min-width:fit-content; text-align:left; background:#fff; border:1px solid transparent; border-radius:8px; padding:8px 12px; cursor:pointer; transition:.15s;}
 .result-item:hover{border-color:var(--accent); background:#fbf4e8;}
 .result-item .r-name{font-size:15px; font-weight:600; color:var(--ink); white-space:nowrap;}
 .result-item .r-sub{font-size:12px; color: #5a5147; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:240px;}
@@ -237,7 +237,7 @@ body.compact .name{font-size:15px; white-space:nowrap;}
   function render(){
     rootEl.innerHTML = '';
     nodeMap.clear(); flat.length = 0;
-    if(rootData) rootEl.appendChild(renderNode(rootData, [rootData.name], 0, null));
+    if(rootData) rootEl.appendChild(renderNode(rootData, [rootData.name], 10, null));
   }
 
   function renderNode(data, path, depth, parentArr){
