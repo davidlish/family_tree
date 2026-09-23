@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>族谱树</title>
+<title>李氏家族中江系族谱树</title>
 <style>
 :root{
   --bg:#f6f1ea; --card:#fffdf9; --ink:#3a332b; --muted:#e6e0d9;
@@ -40,14 +40,14 @@ header .sub{font-size:12px; color:var(--muted);}
 .btn.seg{border:none; border-radius:0; padding:8px 14px; background:#fff; color:var(--muted);}
 .btn.seg.active{background:var(--accent); color:#fff;}
 #status{font-size:12px; color:var(--muted); max-width:230px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-#results{display:none; flex-direction:row; gap:6px; overflow-x:auto; padding:2px 0 6px; width:480px; max-width:88vw; scrollbar-width:thin;}
+#results{display:none; flex-direction:row; gap:6px; overflow-x:auto; padding:2px 0 6px; width:480px; max-width:88vw; scrollbar-width:thin; background-color: #bfd7f5;}
 #results.show{display:flex;}
 #results .none{padding:10px 12px; color:var(--muted); font-size:14px; letter-spacing:1px; white-space:nowrap;}
 #results .hint{padding:10px 12px; color:var(--muted); font-size:12px; white-space:nowrap;}
 .result-item{flex:0 0 auto; display:flex; flex-direction:column; min-width:150px; max-width:260px; text-align:left; background:#fff; border:1px solid transparent; border-radius:8px; padding:8px 12px; cursor:pointer; transition:.15s;}
 .result-item:hover{border-color:var(--accent); background:#fbf4e8;}
 .result-item .r-name{font-size:15px; font-weight:600; color:var(--ink); white-space:nowrap;}
-.result-item .r-sub{font-size:12px; color:var(--muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:240px;}
+.result-item .r-sub{font-size:12px; color: #5a5147; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:240px;}
 main{padding:24px 18px 80px; overflow-x:auto;}
 .node{margin:0;}
 .card{display:flex; gap:14px; align-items:flex-start; background:var(--card); border-radius:12px; padding:12px 16px; box-shadow:0 2px 10px rgba(70,50,25,.08); cursor:pointer; border:1px solid #efe5d6; border-left-width:5px; transition:.15s; width:460px; margin:6px 0;}
@@ -364,8 +364,9 @@ body.compact .name{font-size:15px; white-space:nowrap;}
       item.type = 'button'; item.className = 'result-item';
       // 上辈 3 代：父、祖父、曾祖父（不足则显示已有的）
       var anc = m.path.slice(0, -1).slice(-3);
-      var sub = anc.length ? anc.join(' › ') : '根节点';
-      item.innerHTML = '<span class="r-name">'+esc(m.name)+'</span><span class="r-sub">'+esc(sub)+'</span>';
+      var sub = anc.length ? anc.join(' › ') : '根';
+      // item.innerHTML = '<span class="r-name">'+esc(m.name)+'</span><span class="r-sub">'+esc(sub)+'</span>';
+      item.innerHTML = '</span><span class="r-sub">'+esc(sub)+'</span>';
       item.addEventListener('click', function(){ expandTo(m.path); });
       resultsEl.appendChild(item);
     });
