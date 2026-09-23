@@ -25,7 +25,7 @@ header{
   display:block; align-items:center; gap:12px; flex-wrap:wrap;
 }
 .brand{display:block; align-items:center; gap:12px; flex-wrap:wrap;}
-header h1{font-size:21px; margin:0; letter-spacing:2px; color:var(--accent); font-weight:700; white-space:nowrap; float: left;}
+header h1{font-size:21px; margin:0; letter-spacing:2px; color:var(--accent); font-weight:700; white-space:nowrap;}
 header .sub{font-size:12px; color:var(--muted);}
 .search{display:block; flex-direction:column; gap:8px; margin-left:auto; align-items:flex-end; min-width:0; clear: both;}
 .search-row{display:flex; gap:8px; align-items:center;}
@@ -96,6 +96,7 @@ body.compact .name{font-size:15px; white-space:nowrap;}
 #toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%); background:rgba(50,40,30,.92); color:#fff; padding:10px 16px; border-radius:20px; font-size:14px; max-width:86vw; z-index:200; opacity:0; pointer-events:none; transition:opacity .2s;}
 #toast.show{opacity:1;}
 #search-count{font-size:12px; margin-left:2em; color:var(--muted);}
+.ten-ancestors{font-size:10px; margin-top:4px; color: rgb(39, 141, 209)}
 @media (max-width:640px){
   header{flex-direction:column; align-items:stretch;}
   .search{margin-left:0; align-items:stretch;}
@@ -105,7 +106,11 @@ body.compact .name{font-size:15px; white-space:nowrap;}
 </head>
 <body>
 <header>
-  <div class="brand"><h1>中江李氏族谱</h1>
+  <div class="brand">
+    <div class="basic-info">
+      <h1>中江李氏族谱</h1>
+      <div class="ten-ancestors">前10代祖先：始祖铜公▷文标▷发琳▷再雄▷彦贵▷斌公▷子镮▷仕冕▷希荣▷弘信▷应和</div>
+    </div>
     <div class="toolbar">
       <div class="mode-switch">
         <label><input type="radio" id="modeDetail" name="showModel">详尽型</label>
