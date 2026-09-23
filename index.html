@@ -35,7 +35,7 @@ header .sub{font-size:12px; color:var(--muted);}
 .btn:hover{border-color:var(--accent); color:var(--accent);}
 .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff;}
 .btn.primary:hover{background:#71491f; color:#fff;}
-.toolbar{display:flex; gap:8px; align-items:center; flex-wrap:wrap; float:right;}
+.toolbar{display:flex; gap:8px; align-items:center; flex-wrap:wrap; float:right; margin: 6px 0;}
 .mode-switch{display:flex; border:1px solid var(--line); border-radius:20px; overflow:hidden;}
 .btn.seg{border:none; border-radius:0; padding:8px 14px; background:#fff; color:var(--muted);}
 .btn.seg.active{background:var(--accent); color:#fff;}
@@ -56,7 +56,7 @@ main{padding:24px 18px 80px; overflow-x:auto;}
 .card.female{border-left-color:var(--female);}
 .card.unknown{border-left-color:var(--unknown);}
 .card.highlight{outline:3px solid rgba(138,90,43,.45); outline-offset:2px;}
-.photo-box{flex:0 0 auto; width:74px; height:74px; border-radius:50%; overflow:hidden; background:#f0e8db; border:2px dashed #cdbda5; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#b5a78f; font-size:11px; text-align:center; line-height:1.3;}
+.photo-box{flex:0 0 auto; width:100px; height:120px; border-radius:10%; overflow:hidden; background:#f0e8db; border:2px dashed #cdbda5; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#b5a78f; font-size:11px; text-align:center; line-height:1.3;}
 .photo-box .photo.empty{padding:6px;}
 .photo-box .photo.has{width:100%; height:100%; object-fit:cover; display:block;}
 .info{flex:1; min-width:0;}
@@ -96,7 +96,7 @@ body.compact .name{font-size:15px; white-space:nowrap;}
 #toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%); background:rgba(50,40,30,.92); color:#fff; padding:10px 16px; border-radius:20px; font-size:14px; max-width:86vw; z-index:200; opacity:0; pointer-events:none; transition:opacity .2s;}
 #toast.show{opacity:1;}
 #search-count{font-size:12px; margin-left:2em; color:var(--muted);}
-.ten-ancestors{font-size:10px; margin-top:4px; color: rgb(39, 141, 209)}
+.ten-ancestors{font-size:10px; margin-top:4px; color: rgb(39, 141, 209); text-align:center}
 @media (max-width:640px){
   header{flex-direction:column; align-items:stretch;}
   .search{margin-left:0; align-items:stretch;}
@@ -109,7 +109,7 @@ body.compact .name{font-size:15px; white-space:nowrap;}
   <div class="brand">
     <div class="basic-info">
       <h1>中江李氏族谱</h1>
-      <div class="ten-ancestors">前10代祖先：始祖铜公▷文标▷发琳▷再雄▷彦贵▷斌公▷子镮▷仕冕▷希荣▷弘信▷应和</div>
+      <div class="ten-ancestors">始祖铜公▷文标▷发琳▷再雄▷彦贵▷斌公▷子镮▷仕冕▷希荣▷弘信▷应和</div>
     </div>
     <div class="toolbar">
       <div class="mode-switch">
