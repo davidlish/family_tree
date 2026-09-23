@@ -6,7 +6,7 @@
 <title>族谱树</title>
 <style>
 :root{
-  --bg:#f6f1ea; --card:#fffdf9; --ink:#3a332b; --muted:#cec6bc;
+  --bg:#f6f1ea; --card:#fffdf9; --ink:#3a332b; --muted:#e6e0d9;
   --line:#d8cbb8; --accent:#8a5a2b; --male:#3f6fb5; --female:#c05a7a; --unknown:#9a938a;
 }
 *{box-sizing:border-box;}
@@ -27,17 +27,20 @@ header{
 .brand{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
 header h1{font-size:21px; margin:0; letter-spacing:2px; color:var(--accent); font-weight:700; white-space:nowrap;}
 header .sub{font-size:12px; color:var(--muted);}
-.search{display:flex; flex-direction:column; gap:8px; margin-left:auto; min-width:0; max-width:620px;}
+.search{display:flex; flex-direction:column; gap:8px; margin-left:auto; align-items:flex-end; min-width:0;}
 .search-row{display:flex; gap:8px; align-items:center;}
-.search input{width:210px; padding:9px 12px; font-size:15px; border:1px solid var(--line); border-radius:22px; outline:none; background:#fff; color:var(--ink);}
+.search input{width:160px; padding:9px 12px; font-size:15px; border:1px solid var(--line); border-radius:22px; outline:none; background:#fff; color:var(--ink);}
 .search input:focus{border-color:var(--accent); box-shadow:0 0 0 3px rgba(138,90,43,.12);}
 .btn{padding:8px 13px; font-size:14px; border:1px solid var(--line); border-radius:20px; cursor:pointer; background:#fff; color:var(--ink); white-space:nowrap;}
 .btn:hover{border-color:var(--accent); color:var(--accent);}
 .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff;}
 .btn.primary:hover{background:#71491f; color:#fff;}
-.toolbar{display:flex; gap:6px; align-items:center; flex-wrap:wrap;}
+.toolbar{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+.mode-switch{display:flex; border:1px solid var(--line); border-radius:20px; overflow:hidden;}
+.btn.seg{border:none; border-radius:0; padding:8px 14px; background:#fff; color:var(--muted);}
+.btn.seg.active{background:var(--accent); color:#fff;}
 #status{font-size:12px; color:var(--muted); max-width:230px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-#results{display:none; flex-direction:row; gap:6px; overflow-x:auto; padding:2px 0 6px; scrollbar-width:thin;}
+#results{display:none; flex-direction:row; gap:6px; overflow-x:auto; padding:2px 0 6px; width:480px; max-width:88vw; scrollbar-width:thin;}
 #results.show{display:flex;}
 #results .none{padding:10px 12px; color:var(--muted); font-size:14px; letter-spacing:1px; white-space:nowrap;}
 #results .hint{padding:10px 12px; color:var(--muted); font-size:12px; white-space:nowrap;}
@@ -73,13 +76,14 @@ main{padding:24px 18px 80px; overflow-x:auto;}
 body.editing .edit-btns{display:flex;}
 .eb{padding:5px 11px; font-size:12px; border:1px solid var(--line); border-radius:14px; background:#fff; color:var(--accent); cursor:pointer;}
 .eb.danger{color:#c0392b; border-color:#e4b9b3;}
-/* 精炼型：只显示姓名，突出树形结构 */
-body.compact .card{width:300px; padding:8px 14px; gap:10px;}
+/* 简约型：只显示姓名，突出树形结构，节点按姓名宽度自动收窄 */
+body.compact .card{display:inline-flex; width:auto; padding:6px 12px; gap:8px;}
+body.compact .info{flex:none;}
 body.compact .photo-box,
 body.compact .row,
 body.compact .sex,
 body.compact .gen{display:none;}
-body.compact .name{font-size:16px;}
+body.compact .name{font-size:15px; white-space:nowrap;}
 .modal-overlay{position:fixed; inset:0; background:rgba(40,30,20,.45); display:none; align-items:center; justify-content:center; z-index:100; padding:16px;}
 .modal-box{background:#fffdf9; border-radius:14px; width:100%; max-width:520px; max-height:88vh; overflow:auto; box-shadow:0 20px 60px rgba(0,0,0,.3);}
 .modal-head{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--line); position:sticky; top:0; background:#fffdf9;}
@@ -93,8 +97,8 @@ body.compact .name{font-size:16px;}
 #toast.show{opacity:1;}
 @media (max-width:640px){
   header{flex-direction:column; align-items:stretch;}
-  .search{margin-left:0; max-width:100%;}
-  .search input{flex:1; width:auto;}
+  .search{margin-left:0; align-items:stretch;}
+  #results{width:100%; max-width:100%;}
 }
 </style>
 </head>
@@ -109,11 +113,11 @@ body.compact .name{font-size:16px;}
     <div id="results"></div>
   </div>
   <div class="toolbar">
-    <button id="btnMode" class="btn" type="button">精炼显示</button>
-    <button id="btnRefresh" class="btn" type="button">刷新</button>
+    <div class="mode-switch">
+      <button id="modeDetail" class="btn seg active" type="button">详尽型</button>
+      <button id="modeCompact" class="btn seg" type="button">简约型</button>
+    </div>
     <button id="btnEdit" class="btn" type="button">编辑</button>
-    <button id="btnExport" class="btn" type="button">导出</button>
-    <button id="btnImport" class="btn" type="button">导入</button>
   </div>
   <span id="status">正在加载…</span>
 </header>
@@ -340,7 +344,7 @@ body.compact .name{font-size:16px;}
     }
   }
 
-  // ---- 搜索：结果显示在查询框内下方一行，可左右滑动，每项只显示近三代 ----
+  // ---- 搜索：结果显示在查询面板最后一行，可左右滑动，只显示上 3 代 ----
   var qInput = document.getElementById('q');
   var resultsEl = document.getElementById('results');
   function doSearch(){
@@ -358,30 +362,28 @@ body.compact .name{font-size:16px;}
     matches.forEach(function(m){
       var item = document.createElement('button');
       item.type = 'button'; item.className = 'result-item';
-      // 近三代：本人 + 祖父 + 父（最多上溯两代）
-      var anc = m.path.slice(0, -1).slice(-2);
-      var sub;
-      if(anc.length === 2) sub = '祖父 '+anc[0]+' · 父 '+anc[1];
-      else if(anc.length === 1) sub = '父 '+anc[0];
-      else sub = '根节点';
+      // 上辈 3 代：父、祖父、曾祖父（不足则显示已有的）
+      var anc = m.path.slice(0, -1).slice(-3);
+      var sub = anc.length ? anc.join(' › ') : '根节点';
       item.innerHTML = '<span class="r-name">'+esc(m.name)+'</span><span class="r-sub">'+esc(sub)+'</span>';
-      item.addEventListener('click', function(){ expandTo(m.path); resultsEl.classList.remove('show'); qInput.value=''; });
+      item.addEventListener('click', function(){ expandTo(m.path); });
       resultsEl.appendChild(item);
     });
   }
   document.getElementById('searchBtn').addEventListener('click', doSearch);
   qInput.addEventListener('keydown', function(e){ if(e.key==='Enter') doSearch(); });
 
-  // ---- 详尽 / 精炼 切换 ----
-  function setModeBtnText(){
-    document.getElementById('btnMode').textContent = detailMode ? '精炼显示' : '详尽显示';
-  }
-  function toggleMode(){
-    detailMode = !detailMode;
-    document.body.classList.toggle('compact', !detailMode);
-    setModeBtnText();
+  // ---- 详尽型 / 简约型 切换 ----
+  function setMode(detail){
+    if(detailMode === detail) return;
+    detailMode = detail;
+    document.body.classList.toggle('compact', !detail);
+    document.getElementById('modeDetail').classList.toggle('active', detail);
+    document.getElementById('modeCompact').classList.toggle('active', !detail);
     rerender();
   }
+  document.getElementById('modeDetail').addEventListener('click', function(){ setMode(true); });
+  document.getElementById('modeCompact').addEventListener('click', function(){ setMode(false); });
 
   // ---- 编辑模式 ----
   function setEditBtnText(){
@@ -532,46 +534,13 @@ body.compact .name{font-size:16px;}
     });
   }
 
-  // ---- 导出 / 导入 ----
-  function exportJson(){
-    var d = new Date();
-    var name = 'family_tree_'+d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2)+'.json';
-    var blob = new Blob([JSON.stringify(rootData, null, 1)], {type:'application/json'});
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = name;
-    document.body.appendChild(a); a.click();
-    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
-    toast('已导出备份文件');
-  }
-
-  function importJson(){
-    var input = document.createElement('input');
-    input.type = 'file'; input.accept = '.json,application/json';
-    input.onchange = function(){
-      var f = input.files && input.files[0]; if(!f) return;
-      f.text().then(function(t){
-        var obj = JSON.parse(t);
-        if(!obj || typeof obj.name !== 'string' || !Array.isArray(obj.children)) throw new Error('格式不正确');
-        if(!confirm('导入将覆盖当前云端族谱数据，确定继续吗？')) return;
-        rootData = obj;
-        persist().then(function(ok){ if(ok) rerender(); });
-      }).catch(function(e){ toast('导入失败：'+e.message); });
-    };
-    input.click();
-  }
-
-  // ---- 绑定头部按钮 ----
-  document.getElementById('btnMode').addEventListener('click', toggleMode);
-  document.getElementById('btnRefresh').addEventListener('click', function(){ load(); });
+  // ---- 绑定按钮 ----
   document.getElementById('btnEdit').addEventListener('click', toggleEditing);
-  document.getElementById('btnExport').addEventListener('click', exportJson);
-  document.getElementById('btnImport').addEventListener('click', importJson);
   document.getElementById('modalSave').addEventListener('click', saveForm);
   document.getElementById('modalCancel').addEventListener('click', closeModal);
   document.getElementById('modalClose').addEventListener('click', closeModal);
   document.getElementById('modal').addEventListener('click', function(e){ if(e.target === this) closeModal(); });
 
-  setModeBtnText();
   setEditBtnText();
   load();
 })();
