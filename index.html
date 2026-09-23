@@ -95,6 +95,7 @@ body.compact .name{font-size:15px; white-space:nowrap;}
 .modal-foot{display:flex; justify-content:flex-end; gap:10px; padding:12px 18px 16px;}
 #toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%); background:rgba(50,40,30,.92); color:#fff; padding:10px 16px; border-radius:20px; font-size:14px; max-width:86vw; z-index:200; opacity:0; pointer-events:none; transition:opacity .2s;}
 #toast.show{opacity:1;}
+#search-count{font-size:12px; margin-left:2em; color:var(--muted);}
 @media (max-width:640px){
   header{flex-direction:column; align-items:stretch;}
   .search{margin-left:0; align-items:stretch;}
@@ -117,6 +118,7 @@ body.compact .name{font-size:15px; white-space:nowrap;}
     <div class="search-row">
       <input id="q" type="text" placeholder="输入姓名查询">
       <button id="searchBtn" class="btn primary" type="button">查询</button>
+      <label id="search-count"></label>
     </div>
     <div id="results"></div>
   </div>
@@ -358,8 +360,8 @@ body.compact .name{font-size:15px; white-space:nowrap;}
       resultsEl.innerHTML = '<div class="none">查无此人</div>';
       return;
     }
+    document.getElementById('search-count').textContent = '共 '+matches.length+' 个结果';
     resultsEl.classList.add('show');
-    resultsEl.innerHTML = '<div class="hint">共 '+matches.length+' 个结果</div>';
     matches.forEach(function(m){
       var item = document.createElement('button');
       item.type = 'button'; item.className = 'result-item';
