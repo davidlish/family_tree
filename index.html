@@ -336,6 +336,10 @@ body.compact .name{font-size:15px; white-space:nowrap;}
   }
 
   function expandTo(path){
+    // 先收起所有已展开的节点
+    nodeMap.forEach(function(rec){
+      if(rec.expanded){ rec.expanded = false; rec.childrenEl.style.display = 'none'; var a = rec.card.querySelector('.arrow'); if(a) a.textContent = '▶'; }
+    });
     for(var i=0; i<path.length-1; i++){
       var key = path.slice(0, i+1).join(SEP);
       var rec = nodeMap.get(key);
