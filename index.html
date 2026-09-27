@@ -464,10 +464,15 @@ body.compact .name {
     color: var(--muted);
 }
 .ten-ancestors {
-    font-size: 10px;
+    width: 100%;
     margin-top: 4px;
-    color: #7d6f5a;
-    text-align: center
+    color: #dddddb;
+    overflow: auto;
+    background-color: rgb(124, 62, 10);
+    white-space:nowrap;
+    text-align: center;
+    padding: 4px;
+    margin: 1em 0;
 }
 details {
     padding: 0 1em;
@@ -620,6 +625,7 @@ header {
   text-align: center;
   position: relative;
   text-indent: 0;
+  background-color: blanchedalmond;
 }
 
 .icon-image {
@@ -658,7 +664,7 @@ header {
 		<div class="icon-image"><img alt="icon" src="images/image003.png" style="height: 100%;"></div>
 	</div>
 
-<details style="text-indent: 0">
+<details style="text-indent: 0; margin: 1em 0;">
   <summary>点击查看族谱资料</summary>
   <details>
     <summary>内容介绍</summary>
@@ -4352,7 +4358,7 @@ header {
   <div class="brand">
     <div class="basic-info">
       <h1>中江李氏族谱</h1>
-      <div class="ten-ancestors">始祖铜公▷文标▷发琳▷再雄▷彦贵▷斌公▷子镮▷仕冕▷希荣▷弘信▷应和</div>
+      <div class="ten-ancestors">始祖铜公的10代：<br>①文标　②发琳　③再雄　④彦贵　⑤斌公<br>⑥子镮　⑦仕冕　⑧希荣　⑨弘信　⑩应和</div>
     </div>
     <div class="toolbar">
       <div class="mode-switch">
